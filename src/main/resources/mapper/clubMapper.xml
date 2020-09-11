@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gtxd.repository.ClubDao">
+    <sql id="selectAll">
+         select club.id,club.name name,manager,clubType.name type,createTime, activityNum,members from club,clubType where club.type=clubType.id
+    </sql>
+    <select id="getAll" resultType="com.gtxd.pojos.Club">
+       <include refid="selectAll"></include> order by club.id
+    </select>
+    <insert id="addClub" parameterType="com.gtxd.pojos.Club">
+         insert into  club(name,manager,type,createTime,activityNum,members) values(#{name},#{manager},#{typeId},#{createTime},#{activityNum},#{members})
+    </insert>
+    <delete id="deleteClub" parameterType="integer">
+        delete from club where id=#{id}
+    </delete>
+    <update id="modifyClub" parameterType="com.gtxd.pojos.Club">
+        update club set name=#{name},manager=#{manager},members=#{members} where id=#{id}
+    </update>
+    <select id="getClubByPk" parameterType="integer" resultType="com.gtxd.pojos.Club">
+        <include refid="selectAll"></include> and club.id=#{id}
+    </select>
+    <select id="getClubByname" parameterType="com.gtxd.pojos.Club"  resultType="com.gtxd.pojos.Club">
+        select * from club where name =#{name}
+    </select>
+</mapper>

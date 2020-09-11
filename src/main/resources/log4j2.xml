@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- status:log4j的本身日志输出级别  -->
+<Configuration status="debug">
+	<Appenders>
+		<!-- target: SYSTEM_OUT 或 SYSTEM.ERR -->
+		<Console  name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+		<File name="fileLog" fileName="./log/clubmanagement.log" append="true">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n"/>
+		</File>
+	</Appenders>
+	<Loggers>
+		<!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
+		<!--<Logger name="org.springframework" level="INFO"/>-->
+		<Logger name="org.mybatis" level="INFO"/>
+		<!-- additivity="true" root日志再来一次 -->
+		<Logger name="mylog" level="debug" additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="fileLog"	/>
+		</Logger>
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="fileLog"	/>
+		</Root>
+	</Loggers>
+</Configuration>
+
